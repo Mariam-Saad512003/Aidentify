@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Payments</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/templatemo-topic-listing.css" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index_admin.html">
+                    <img src="../css/images/tooth-cleaning.png" width="28" height="28">
+                    <span>tooth</span>
+                </a>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav ms-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index_admin.html">Dashboard</a>
+                        </li>
+                    </ul>
+                    <!-- Desktop user icon and logout -->
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
+                        <a href="admin_Profile.html" class="navbar-icon bi-person smoothscroll"></a>
+                        <img src="../css/images/logout.png" alt="" id="logoutBtn"
+                            style="width: 40px; height: 40px; margin: 0 0.5rem; background: transparent; mix-blend-mode: multiply;">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <header class="site-header d-flex flex-column justify-content-center align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 text-center">
+                        <h2 class="text-white">Manage Payments</h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Payment ID</th>
+                                        <th>User</th>
+                                        <th>Payment Method</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paymentsTableBody">
+                                    <!-- Payments will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <p class="copyright-text">Copyright &copy; 2023</p>
+                    <li class="site-footer-link-item">
+                        <a href="index_admin.html" class="site-footer-link">Dashboard</a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import AuthService from '../js/api/AuthService.js';
+
+        const authService = new AuthService();
+
+        // Mock data for payments
+        const mockPayments = [
+            {
+                paymentId: "PAY-1",
+                userId: "user-1",
+                userName: "John Doe",
+                paymentMethod: "Card"
+            },
+            {
+                paymentId: "PAY-2",
+                userId: "user-2",
+                userName: "Jane Smith",
+                paymentMethod: "Cash"
+            },
+            {
+                paymentId: "PAY-3",
+                userId: "user-3",
+                userName: "Mike Johnson",
+                paymentMethod: "Card"
+            }
+        ];
+
+        // Check if user is admin
+        const user = authService.getUser();
+        if (!user || !user.roles || !user.roles.includes('Admin')) {
+            window.location.href = '../login.html';
+        }
+
+        // Load payments on page load
+        loadPayments();
+
+        // Function to load pending payments (mock)
+        async function loadPayments() {
+            try {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 500));
+                displayPayments(mockPayments);
+            } catch (error) {
+                console.error('Error loading payments:', error);
+                alert('Failed to load payments');
+            }
+        }
+
+        // Function to display payments in the table
+        function displayPayments(payments) {
+            const tableBody = document.getElementById('paymentsTableBody');
+            tableBody.innerHTML = '';
+
+            if (!payments || payments.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="4" class="text-center">No pending payments found</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+
+            payments.forEach(payment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${payment.paymentId}</td>
+                    <td>${payment.userName}</td>
+                    <td>${payment.paymentMethod}</td>
+                    <td>
+                        <button class="btn btn-sm btn-success" onclick="approvePayment('${payment.paymentId}')">Approve</button>
+                        <button class="btn btn-sm btn-danger" onclick="rejectPayment('${payment.paymentId}')">Reject</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to approve payment (mock)
+        window.approvePayment = async function (paymentId) {
+            if (!confirm('Are you sure you want to approve this payment?')) {
+                return;
+            }
+
+            try {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const index = mockPayments.findIndex(p => p.paymentId === paymentId);
+                if (index !== -1) {
+                    mockPayments.splice(index, 1);
+                }
+
+                alert('Payment approved successfully');
+                loadPayments();
+            } catch (error) {
+                console.error('Error approving payment:', error);
+                alert('Failed to approve payment');
+            }
+        }
+
+        // Function to reject payment (mock)
+        window.rejectPayment = async function (paymentId) {
+            if (!confirm('Are you sure you want to reject this payment?')) {
+                return;
+            }
+
+            try {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const index = mockPayments.findIndex(p => p.paymentId === paymentId);
+                if (index !== -1) {
+                    mockPayments.splice(index, 1);
+                }
+
+                alert('Payment rejected successfully');
+                loadPayments();
+            } catch (error) {
+                console.error('Error rejecting payment:', error);
+                alert('Failed to reject payment');
+            }
+        }
+    </script>
+</body>
+
+</html>
