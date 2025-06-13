@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Aidentify - Login</title>
+  <!--favicon -->
+  <link rel="icon" href="images/tooth-cleaning.png" type="">
+
+  <!-- CSS FILES -->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      background: var(--white-color);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--white-color);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .form-header h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--white-color);
+    }
+
+    .form-content {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(128, 208, 199, 0.2);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      background-color: white;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(128, 208, 199, 0.25);
+      outline: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--white-color);
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    }
+
+    .error-message {
+      background: #dc3545;
+      color: var(--white-color);
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .form-links {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .form-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+      margin: 0 10px;
+    }
+
+    .form-links a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    .google-login {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .google-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: var(--white-color);
+      border: 1px solid rgba(128, 208, 199, 0.2);
+      border-radius: 4px;
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .google-btn:hover {
+      background: rgba(128, 208, 199, 0.1);
+    }
+
+    .google-btn img {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+      transition: color 0.3s ease;
+    }
+
+    .eye-icon:hover {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="form-header">
+      <h2>Welcome Back</h2>
+    </div>
+    <div class="form-content">
+      <div class="error-message" id="errorMessage"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-field">
+            <input type="password" id="password" required>
+            <i class='bx bx-hide eye-icon'></i>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn">Login</button>
+      </form>
+      <div class="form-links">
+        <a href="#" class="forgot-pass">Forgot password?</a>
+        <br>
+        <br>
+        <span>Dont have an account? </span>
+        <a href="register.html">Create an account here</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Files -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/custom.js"></script>
+
+  <script type="module">
+    import AuthService from './js/api/AuthService.js';
+
+    const authService = new AuthService();
+
+    // Add password visibility toggle functionality
+    document.querySelector('.eye-icon').addEventListener('click', function () {
+      const passwordInput = this.previousElementSibling;
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+
+      // Toggle eye icon
+      this.classList.toggle('bx-hide');
+      this.classList.toggle('bx-show');
+    });
+
+    // Handle form submission
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        showError('Please fill in all fields');
+        return;
+      }
+
+      try {
+        const submitButton = document.querySelector('.submit-btn');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Logging in...';
+
+        const response = await authService.login(username, password);
+        console.log('Login successful:', response);
+
+        // Get user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('user'));
+        console.log('User data:', userData);
+
+        // Check if user has any roles
+        if (!userData || !userData.roles || userData.roles.length === 0) {
+          throw new Error('No roles assigned to user');
+        }
+
+        // Redirect based on the first role in the roles array
+        const userRole = userData.roles[0].toLowerCase();
+        console.log('User role:', userRole);
+
+        switch (userRole) {
+          case 'admin':
+            window.location.href = 'Admin/index_admin.html';
+            break;
+          case 'doctor':
+            window.location.href = 'Doctor1/index_doctor.html';
+            break;
+          case 'student':
+            window.location.href = 'Student1/index_student.html';
+            break;
+          default:
+            throw new Error('Unknown role');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showError(error.message || 'Login failed. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Login';
+      }
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+  </script>
+</body>
+
+</html>
